@@ -3,12 +3,29 @@
   // 引入类
   require_once('inc/require.php');
 
-  if(isset($_GET['id'])) {
+  if(isset($_GET['id'])) {  // 处理这种网址  hao99.cn?id=131d
     
     $url_c = new url();
 
     // 获取目标网址
     $url = $url_c->get_url($_GET['id']);
+    // 重定向至目标网址
+    if($url) {
+      header('Location: ' . $url);
+      exit;
+    }
+
+  }
+  //header('Location: ' . $_SERVER['PHP_SELF']);
+  //echo $_SERVER['PHP_SELF']."<br>";
+  //echo  dirname($_SERVER['PHP_SELF']),"<br/>";
+	//echo basename($_SERVER['PHP_SELF']);
+  if(!is_null(basename($_SERVER['PHP_SELF']))) {  //处理这种网址  hao99.cn/131d
+    
+    $url_c = new url();
+
+    // 获取目标网址
+    $url = $url_c->get_url(basename($_SERVER['PHP_SELF']));
     // 重定向至目标网址
     if($url) {
       header('Location: ' . $url);
